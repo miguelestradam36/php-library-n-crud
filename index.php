@@ -53,6 +53,7 @@
         }
 
         $subscribe_id = null;
+        $subscribe_edit_email = null;
         $type_of_action = "";
 
         //Code to add a row into the database
@@ -188,13 +189,21 @@
                                         <br/>
                                         <div class="row container">
                                             <div class="form-group">
-                                                <button name="FinalEdit" class="btn btn-primary" type="submit">Finish Edit</button>
+                                                <button name="FinalEdit" class="btn btn-success" type="submit">Finish Edit</button>
                                             </div>
                                         </div>
                                     </form>
                                 ';
                             }
                         }
+
+                        if(isset($_POST['FinalEdit'])){
+                            $subscribe_edit_email = $_POST["editemail"];
+                            $sql_query = "UPDATE `subscribers` SET email = ".$subscribe_edit_email." WHERE Personid = ".$subscribe_id.";";
+                            $query = $conn->query($sql_query);
+                            $type_of_action = "Edit Finished";
+                        } 
+
                         ?>
                     </div>
                 </div>
@@ -319,5 +328,5 @@
 </html>
 
 <?php 
-$conn->close();
+//$conn->close();
 ?>
