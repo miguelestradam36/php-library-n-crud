@@ -176,6 +176,7 @@
                         if(isset($_POST['EditSubscriber'])){
                             $subscribe_id = $_POST["EditPersonid"];
                             $type_of_action = "Edit";
+                            global $subscribe_id;
                         } 
 
                         if ($type_of_action == "Edit"){
@@ -185,6 +186,9 @@
                                         <div class="row container">
                                             <div class="form-group">
                                                 <input type="email" name="editemail" class="form-control" id="editemail" placeholder="Your Email" required />
+                                            </div>
+                                            <div class="form-group">
+                                                <input type="hidden" name="savedid" value="'.$subscribe_id.'">
                                             </div>
                                         </div>
                                         <br/>
@@ -200,9 +204,18 @@
 
                         if(isset($_POST['FinalEdit'])){
                             $subscribe_edit_email = $_POST["editemail"];
-                            $sql_query = "UPDATE subscribers SET email = '".$subscribe_edit_email."' WHERE Personid = '".$subscribe_id."';";
-                            $query = $conn->query($sql_query);
-                            $type_of_action = "Edit Finished";
+                            $subscribe_edit_id = $_POST["savedid"];
+                            if ($subscribe_edit_email != null){
+                                if ($subscribe_edit_id != null){
+                                    $sql_query = "UPDATE `subscribers` SET `subscribers`.`email`='".$subscribe_edit_email."' WHERE `subscribers`.`Personid` = ".$subscribe_edit_id."";
+                                    $query = $conn->query($sql_query);
+                                    $type_of_action = "Edit Finished";
+                                } else {
+                                    die("Not able to save ID of the email we are going to edit.");
+                                }
+                            } else {
+                                die("Not able to save email to edit.");
+                            }
                         } 
 
                         ?>
