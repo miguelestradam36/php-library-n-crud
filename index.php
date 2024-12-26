@@ -56,11 +56,13 @@
 
         $subscribe_email = "";
         $subscribe_query = null;
+        $type_of_action = "";
 
         if(isset($_POST['SubscribeButton'])){
             $subscribe_email = $_POST["email"];
             $subscribe_sql = "INSERT INTO `subscribers` (email) VALUES ('".$subscribe_email."')";;
             $subscribe_query = $conn->query($subscribe_sql);
+            $type_of_action = "Add";
         }
 
         //Code to edit a row in the database
@@ -69,14 +71,16 @@
             $subscribe_email = $_POST["subemail"];
             $subscribe_sql = "INSERT INTO `subscribers` (email) VALUES ('".$subscribe_email."')";;
             $subscribe_query = $conn->query($subscribe_sql);
+            $type_of_action = "Edit";
         }
 
         //Code to erase a row in the database
 
-        if(isset($_POST['EraseSubscriberButton'])){
-            $subscribe_email = $_POST["subemail"];
-            $subscribe_sql = "INSERT INTO `subscribers` (email) VALUES ('".$subscribe_email."')";;
+        if(isset($_POST['DeleteSubscriberButton'])){
+            $subscribe_email_delete = $_POST["DeletePersonid"];
+            $subscribe_sql = "DELETE FROM `subscribers` WHERE Personid=".$subscribe_email.";";;
             $subscribe_query = $conn->query($subscribe_sql);
+            $type_of_action = "Delete";
         }
 
         ?>
@@ -162,6 +166,32 @@
             <!-- /About 2 Section -->
             <section>
                 <div class="container">
+                    <div class="my-3">
+                        <?php
+                            if(!is_null($subscribe_query)){
+                                if ($type_of_action == "Add"){
+                                    echo "
+                                    <div class='alert alert-success' role='alert'>
+                                        Guardamos tu comentario $name !
+                                    </div>";
+                                }
+                                if ($type_of_action == "Delete"){
+                                    echo "
+                                    <div class='alert alert-success' role='alert'>
+                                        Guardamos tu comentario $name !
+                                    </div>";
+                                }
+                                if ($type_of_action == "Edit"){
+                                    echo "
+                                    <div class='alert alert-success' role='alert'>
+                                        Guardamos tu comentario $name !
+                                    </div>";
+                                }
+                            }
+                        ?>
+                    </div>
+                </div>
+                <div class="container">
                     <?php
                     $res = $conn->query($sql_sub_check_table);
                     if ($res) { 
@@ -173,13 +203,15 @@
                                 <div class="col-lg-4 p-1">
                                     <div class="card">
                                         <div class="card-body">
-                                            <h5 class="card-title">Person on file</h5>
+                                            <h5 class="card-title">Person on file / ID: '.$row['Personid'].'</h5>
                                             <p class="card-text">The email we have on file for this item is: &#32; &#32; '.$row['email'].'.</p>
-                                            <form>
-                                                <a href="#" class="btn btn-primary">Edit</a>
+                                            <form action="" method="post">
+                                                <input type="hidden" name="EditPersonid" value="'.$row['Personid'].'">
+                                                <button name="SubscribeButton" class="btn btn-primary" type="submit"> Edit </button>
                                             </form>
-                                            <form>
-                                                <a href="#" class="btn btn-danger">Delete</a>
+                                            <form action="" method="post">
+                                                <input type="hidden" name="DeletePersonid" value="'.$row['Personid'].'">
+                                                <button name="DeleteSubscriberButton" class="btn btn-primary" type="submit"> Delete </button>
                                             </form>
                                         </div>
                                     </div>
@@ -200,7 +232,6 @@
                     ?>
                 </div>
             </section>
-
         </main>
         <footer id="footer" class="footer light-background">
             <div class="container">
