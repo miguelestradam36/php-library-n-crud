@@ -52,6 +52,9 @@
             }
         }
 
+        $subscribe_id = null;
+        $type_of_action = "";
+
         //Code to add a row into the database
 
         $subscribe_email = "";
@@ -68,7 +71,7 @@
         //Code to edit a row in the database
 
         if(isset($_POST['EditSubscriberButton'])){
-            $subscribe_email = $_POST["subemail"];
+            ##$subscribe_email = $_POST["subemail"];
             $subscribe_sql = "INSERT INTO `subscribers` (email) VALUES ('".$subscribe_email."')";;
             $subscribe_query = $conn->query($subscribe_sql);
             $type_of_action = "Edit";
@@ -77,8 +80,8 @@
         //Code to erase a row in the database
 
         if(isset($_POST['DeleteSubscriberButton'])){
-            $subscribe_email_delete = $_POST["DeletePersonid"];
-            $subscribe_sql = "DELETE FROM `subscribers` WHERE Personid=".$subscribe_email.";";;
+            $subscriber_id = $_POST["DeletePersonid"];
+            $subscribe_sql = "DELETE FROM `subscribers` WHERE Personid=".$subscriber_id.";";;
             $subscribe_query = $conn->query($subscribe_sql);
             $type_of_action = "Delete";
         }
@@ -166,25 +169,38 @@
             <!-- /About 2 Section -->
             <section>
                 <div class="container">
+                    <div class="row">
+                        <?php
+                        if(isset($_POST['EditSubscriber'])){
+                            $subscribe_id = $_POST["EditPersonid"];
+                            $type_of_action = "Edit";
+                        } 
+
+                        if ($type_of_action == "Edit"){
+                            if ($subscribe_id != null){
+                                echo "
+                                <div class='alert alert-success' role='alert'>
+                                    Editamos tu comentario: $subscribe_email !
+                                </div>";
+                            }
+                        }
+                        ?>
+                    </div>
+                </div>
+                <div class="container">
                     <div class="my-3">
                         <?php
                             if(!is_null($subscribe_query)){
                                 if ($type_of_action == "Add"){
                                     echo "
                                     <div class='alert alert-success' role='alert'>
-                                        Guardamos tu comentario $name !
+                                        We just saved your email in the database: $subscribe_email !
                                     </div>";
                                 }
                                 if ($type_of_action == "Delete"){
                                     echo "
                                     <div class='alert alert-success' role='alert'>
-                                        Guardamos tu comentario $name !
-                                    </div>";
-                                }
-                                if ($type_of_action == "Edit"){
-                                    echo "
-                                    <div class='alert alert-success' role='alert'>
-                                        Guardamos tu comentario $name !
+                                        We have deleted that comment from the database!
                                     </div>";
                                 }
                             }
@@ -207,11 +223,11 @@
                                             <p class="card-text">The email we have on file for this item is: &#32; &#32; '.$row['email'].'.</p>
                                             <form action="" method="post">
                                                 <input type="hidden" name="EditPersonid" value="'.$row['Personid'].'">
-                                                <button name="SubscribeButton" class="btn btn-primary" type="submit"> Edit </button>
+                                                <button name="EditSubscriber" class="btn btn-primary" type="submit"> Edit </button>
                                             </form>
                                             <form action="" method="post">
                                                 <input type="hidden" name="DeletePersonid" value="'.$row['Personid'].'">
-                                                <button name="DeleteSubscriberButton" class="btn btn-primary" type="submit"> Delete </button>
+                                                <button name="DeleteSubscriberButton" class="btn btn-danger" type="submit"> Delete </button>
                                             </form>
                                         </div>
                                     </div>
@@ -220,7 +236,7 @@
                                 ';
                             } 
                             echo '</div>'; 
-                            $res->free(); 
+                            //$res->free(); 
                         } 
                         else { 
                             echo "No matching records are found."; 
@@ -228,7 +244,8 @@
                     } 
                     else { 
                         die("ERROR: Could not able to execute $sql. " .$mysqli->error); 
-                    } 
+                    }
+                    //Code to edit a row in the database
                     ?>
                 </div>
             </section>
