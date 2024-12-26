@@ -55,6 +55,7 @@
         $subscribe_id = null;
         $subscribe_edit_email = null;
         $type_of_action = "";
+        $query = null;
 
         //Code to add a row into the database
 
@@ -178,7 +179,7 @@
                         } 
 
                         if ($type_of_action == "Edit"){
-                            if ($subscribe_id != null){
+                            if ($subscribe_id != null && $query == null){
                                 echo '
                                     <form action="" method="post">
                                         <div class="row container">
@@ -199,7 +200,7 @@
 
                         if(isset($_POST['FinalEdit'])){
                             $subscribe_edit_email = $_POST["editemail"];
-                            $sql_query = "UPDATE `subscribers` SET email = ".$subscribe_edit_email." WHERE Personid = ".$subscribe_id.";";
+                            $sql_query = "UPDATE subscribers SET email = '".$subscribe_edit_email."' WHERE Personid = '".$subscribe_id."';";
                             $query = $conn->query($sql_query);
                             $type_of_action = "Edit Finished";
                         } 
@@ -215,6 +216,7 @@
                 <div class="container">
                     <div class="my-3">
                         <?php
+                            //Confirmation of deleting or adding info
                             if(!is_null($subscribe_query)){
                                 if ($type_of_action == "Add"){
                                     echo "
@@ -226,6 +228,15 @@
                                     echo "
                                     <div class='alert alert-success' role='alert'>
                                         We have deleted that comment from the database!
+                                    </div>";
+                                }
+                            }
+                            //Confirmation of the edit of a row
+                            if(!is_null($query)){
+                                if ($type_of_action == "Edit Finished"){
+                                    echo "
+                                    <div class='alert alert-success' role='alert'>
+                                        We just updated the email that we had on file, the new email is: $subscribe_edit_email !
                                     </div>";
                                 }
                             }
