@@ -261,35 +261,6 @@
                 <h2>Recent comments</h2>
             </div>
             <div class="container">
-                <?php
-                $res = $conn->query($sql_check_table);
-                if ($res) { 
-                    if ($res->num_rows > 0) { 
-                        echo "<div class='list-group'>";
-                        while ($row = $res->fetch_array())  
-                        { 
-                            echo '
-                            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1">'.$row['name'].'.</h5>
-                                    <small>'.$row['time'].'</small>
-                                </div>
-                                <p class="mb-1">'.$row['comment'].'</p>
-                                <small>We see your comments!</small>
-                            </a>
-                            ';
-                        } 
-                        echo '</div>'; 
-                        $res->free(); 
-                    } 
-                    else { 
-                        "No matching records are found."; 
-                    } 
-                } 
-                else { 
-                    die("ERROR: Could not able to execute $sql. " .$mysqli->error); 
-                } 
-                ?>
             </div>
             <!-- End Section Title -->
             <div class="container" data-aos="fade">

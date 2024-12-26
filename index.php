@@ -58,7 +58,7 @@
         $subscribe_query = null;
 
         if(isset($_POST['SubscribeButton'])){
-            $subscribe_email = $_POST["subemail"];
+            $subscribe_email = $_POST["email"];
             $subscribe_sql = "INSERT INTO `subscribers` (email) VALUES ('".$subscribe_email."')";;
             $subscribe_query = $conn->query($subscribe_sql);
         }
@@ -148,19 +148,8 @@
                                                 <input type="email" name="email" class="form-control" id="email" placeholder="Your Email" required />
                                             </div>
                                         </div>
-                                        <div class="my-3">
-                                            <?php
-                                                if(!is_null($subscribe_query)){
-                                                    echo "
-                                                    <div class='alert alert-success' role='alert'>
-                                                        Guardamos tu comentario $name !
-                                                    </div>";
-                                                }
-                                            ?>
-                                            </div>
-                                        </div>
                                         <div class="text-center">
-                                            <button name="SubmitButton" class="btn btn-primary" type="submit">Comment</button>
+                                            <button name="SubscribeButton" class="btn btn-primary" type="submit">Add data</button>
                                         </div>
                                     </form>
                                     <!-- End of Form -->
@@ -171,6 +160,47 @@
                 </div>
             </section>
             <!-- /About 2 Section -->
+            <section>
+                <div class="container">
+                    <?php
+                    $res = $conn->query($sql_sub_check_table);
+                    if ($res) { 
+                        if ($res->num_rows > 0) { 
+                            echo "<div class='row'>";
+                            while ($row = $res->fetch_array())  
+                            { 
+                                echo '
+                                <div class="col-lg-4 p-1">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Person on file</h5>
+                                            <p class="card-text">The email we have on file for this item is: &#32; &#32; '.$row['email'].'.</p>
+                                            <form>
+                                                <a href="#" class="btn btn-primary">Edit</a>
+                                            </form>
+                                            <form>
+                                                <a href="#" class="btn btn-danger">Delete</a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                ';
+                            } 
+                            echo '</div>'; 
+                            $res->free(); 
+                        } 
+                        else { 
+                            echo "No matching records are found."; 
+                        } 
+                    } 
+                    else { 
+                        die("ERROR: Could not able to execute $sql. " .$mysqli->error); 
+                    } 
+                    ?>
+                </div>
+            </section>
+
         </main>
         <footer id="footer" class="footer light-background">
             <div class="container">
