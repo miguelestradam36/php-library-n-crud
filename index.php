@@ -68,15 +68,6 @@
             $type_of_action = "Add";
         }
 
-        //Code to edit a row in the database
-
-        if(isset($_POST['EditSubscriberButton'])){
-            ##$subscribe_email = $_POST["subemail"];
-            $subscribe_sql = "INSERT INTO `subscribers` (email) VALUES ('".$subscribe_email."')";;
-            $subscribe_query = $conn->query($subscribe_sql);
-            $type_of_action = "Edit";
-        }
-
         //Code to erase a row in the database
 
         if(isset($_POST['DeleteSubscriberButton'])){
@@ -95,8 +86,8 @@
         <title>PHP CRUD</title>
 
         <!-- Favicons -->
-        <link href="assets/img/favicon.jpg" rel="icon">
-        <link href="assets/img/apple-touch-icon.jpg" rel="apple-touch-icon">
+        <link href="docs/img/phpicon.png" rel="icon">
+        <link href="docs/img/phpicon.png" rel="apple-touch-icon">
 
         <!-- CSS assets -->
         <link href="assets/css/main.css" rel="stylesheet" type="text/css">
@@ -167,7 +158,16 @@
                 </div>
             </section>
             <!-- /About 2 Section -->
-            <section>
+            <section id="information" class="section">
+                <!-- Section Title -->
+                <div class="container section-title" data-aos="fade-up">
+                    <p>Information from the database</p>
+                    <h2>Information from the database</h2>
+                </div>
+                <div class="container">
+                    <hr/>
+                </div>
+                <!-- End Section Title -->
                 <div class="container">
                     <div class="row">
                         <?php
@@ -178,13 +178,29 @@
 
                         if ($type_of_action == "Edit"){
                             if ($subscribe_id != null){
-                                echo "
-                                <div class='alert alert-success' role='alert'>
-                                    Editamos tu comentario: $subscribe_email !
-                                </div>";
+                                echo '
+                                    <form action="" method="post">
+                                        <div class="row container">
+                                            <div class="form-group">
+                                                <input type="email" name="editemail" class="form-control" id="editemail" placeholder="Your Email" required />
+                                            </div>
+                                        </div>
+                                        <br/>
+                                        <div class="row container">
+                                            <div class="form-group">
+                                                <button name="FinalEdit" class="btn btn-primary" type="submit">Finish Edit</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                ';
                             }
                         }
                         ?>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <br/>
                     </div>
                 </div>
                 <div class="container">
