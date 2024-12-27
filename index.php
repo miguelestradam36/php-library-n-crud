@@ -118,6 +118,11 @@
         <main class="main">
             <!-- About 2 Section -->
             <section id="about-2" class="about-2 section light-background">
+                <!-- Section Title -->
+                <div class="container section-title" data-aos="fade-up">
+                    <p>Information from the database - Add section</p>
+                    <h2>Information from the database - Add section</h2>
+                </div>
                 <div class="container">
                     <div class="content">
                         <div class="row justify-content-center">
@@ -130,12 +135,12 @@
                             </div>
                             <div class="offset-md-0 offset-lg-1 col-sm-12 col-md-5 col-lg-5 col-xl-4" data-aos="fade-up">
                                 <div class="px-3">
-                                    <span class="content-subtitle">Tips para cuando prácticas yoga en casa</span>
+                                    <span class="content-subtitle">PHP project for practice</span>
                                     <h2 class="content-title text-start">
-                                    La mejor forma de regalar bienestar. Ofrece momentos de calma, energía y conexión con nuestras tarjetas regalo
+                                        This would be a working example of a PHP - CRUD
                                     </h2>
                                     <p class="lead">
-                                    Designa una hora del día y se constante.
+                                        In this space you can items to the table, you just need to input the @email
                                     </p>
                                     <br/>
                                 </div>
@@ -144,12 +149,15 @@
                                     <!-- Form for subscribers -->
                                     <form action="" method="post">
                                         <div class="row container">
-                                            <div class="col-md-12 form-group">
+                                            <div class="form-group">
                                                 <input type="email" name="email" class="form-control" id="email" placeholder="Your Email" required />
                                             </div>
                                         </div>
-                                        <div class="text-center">
-                                            <button name="SubscribeButton" class="btn btn-primary" type="submit">Add data</button>
+                                        <br/>
+                                        <div class="row container">
+                                            <div class="form-group">
+                                                <button name="SubscribeButton" class="btn btn-primary" type="submit">Add data</button>
+                                            </div>
                                         </div>
                                     </form>
                                     <!-- End of Form -->
@@ -161,11 +169,6 @@
             </section>
             <!-- /About 2 Section -->
             <section id="information" class="section">
-                <!-- Section Title -->
-                <div class="container section-title" data-aos="fade-up">
-                    <p>Information from the database</p>
-                    <h2>Information from the database</h2>
-                </div>
                 <div class="container">
                     <hr/>
                 </div>
@@ -182,6 +185,10 @@
                         if ($type_of_action == "Edit"){
                             if ($subscribe_id != null && $query == null){
                                 echo '
+                                    <div class="container section-title" data-aos="fade-up">
+                                        <p>Form to edit this item</p>
+                                        <h2>Form to edit this item</h2>
+                                    </div>
                                     <form action="" method="post">
                                         <div class="row container">
                                             <div class="form-group">
@@ -257,6 +264,10 @@
                     </div>
                 </div>
                 <div class="container">
+                    <div class="container section-title" data-aos="fade-up">
+                        <p>Items available on the table</p>
+                        <h2>Items available on the table</h2>
+                    </div>
                     <?php
                     $res = $conn->query($sql_sub_check_table);
                     if ($res) { 
